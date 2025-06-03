@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/http/httputil"
 
 	"github.com/DaviNAzevedo/wago/api/client"
 )
@@ -35,6 +36,9 @@ func (c *Client) SendMessage(payload []byte) error {
 	if err != nil {
 		return err
 	}
+
+	i, _ := httputil.DumpRequestOut(messageRequest, true)
+	log.Println(string(i))
 
 	if res.StatusCode < 200 || res.StatusCode > 299 {
 		response, _ := io.ReadAll(res.Body)
