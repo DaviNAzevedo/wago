@@ -37,7 +37,7 @@ func (c *Client) SendMessage(payload []byte) error {
 		return err
 	}
 
-	i, _ := httputil.DumpRequestOut(res.Request, true)
+	i, _ := httputil.DumpRequestOut(res.Request, false)
 	log.Println(string(i))
 
 	if res.StatusCode < 200 || res.StatusCode > 299 {
