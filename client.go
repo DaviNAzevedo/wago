@@ -32,13 +32,13 @@ func (c *Client) SendMessage(payload []byte) error {
 	messageRequest.Header.Set("Authorization", c.token)
 	messageRequest.Header.Set("Content-Type", "application/json")
 
+	i, _ := httputil.DumpRequestOut(messageRequest, false)
+	log.Println(string(i))
+
 	res, err := http.DefaultClient.Do(messageRequest)
 	if err != nil {
 		return err
 	}
-
-	i, _ := httputil.DumpRequestOut(res.Request, false)
-	log.Println(string(i))
 
 	if res.StatusCode < 200 || res.StatusCode > 299 {
 		response, _ := io.ReadAll(res.Body)
